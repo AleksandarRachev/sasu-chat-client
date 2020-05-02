@@ -1,0 +1,20 @@
+.login-form {
+  width: 20rem;
+  position: fixed;
+  left: 35%;
+  right: 35%;
+  top: 12rem;
+  padding: 2rem;
+  border-radius: 15px;
+  background-color: #bebebec2;    
+  box-shadow: 1px 1px 9px #8080808c;
+}
+
+@media only screen and (max-width: 600px) {
+  .login-form {
+    width: 15rem;
+    position: fixed;
+    left: 20%;
+    top: 8rem;
+  }
+}

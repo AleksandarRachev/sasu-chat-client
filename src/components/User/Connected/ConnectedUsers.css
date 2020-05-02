@@ -1,0 +1,4 @@
+.connected {
+  width: calc(5vmin + 5rem);
+  font-size: calc(1vmin + 10px);
+}

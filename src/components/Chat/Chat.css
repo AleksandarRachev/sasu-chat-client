@@ -1,0 +1,52 @@
+.chat-messages {
+  overflow: auto;
+  width: 20rem;
+  display: flex;
+  flex-direction: column-reverse;
+  flex: 1 1;
+  padding: 0 2rem;
+  margin: 0 0.5rem 1rem 0.5rem;
+  background-color: white;
+  border-radius: 15px 0 0 15px;
+}
+
+.chat {
+  background-color: #cdd1d1;
+  border-radius: 15px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  height: 50%;
+  margin: 1rem;
+  padding: 0 0 1rem 0;
+}
+
+.chat-info {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  padding: 0.3rem;
+}
+
+.send-btn {
+  background: none;
+  border: none;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 15px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 15px;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 10px;
+}
