@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/User/Login";
 import ConnectedUsers from "./components/User/Connected/ConnectedUsers";
 import Chat from "./components/Chat/Chat";
+import ChatList from "./components/Chat/ChatList/ChatList";
 
 const AppConfig = {
   PROTOCOL: "ws:",
@@ -26,6 +27,7 @@ class App extends Component {
     showChat: false,
     userTo: null,
     userFrom: user,
+    chats: [],
   };
 
   componentDidMount() {
@@ -85,11 +87,62 @@ class App extends Component {
   };
 
   handleUserPick = (userTo) => {
-    this.setState({ userTo: userTo, showChat: true, messages: [] });
+    this.setState({ userTo: userTo });
   };
 
   handleShowChat = () => {
     this.setState({ showChat: !this.state.showChat });
+  };
+
+  handleCloseChat = (chat) => {
+    // console.log(
+    //   this.getChatIndex(
+    //     chat,
+    //     this.state.chats
+    //   )
+    // );
+    let chats = [...this.state.chats];
+    const index = this.getChatIndex(chat, this.state.chats);
+    if (index !== -1) {
+      let chatChange = { ...chats[index] };
+      chatChange.showChat = false;
+      chats[index] = chatChange;
+      this.setState({ chats });
+    }
+    // else {
+    //   this.setState({
+    //     chats: this.state.chats.concat({ chat }),
+    //   });
+    // }
+  };
+
+  getChatIndex(chat, chats) {
+    for (var i = 0; i < chats.length; i++) {
+      if (
+        chats[i].userFrom === chat.userFrom &&
+        chats[i].userTo === chat.userTo
+      ) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  qwe = (chat) => {
+    let chats = [...this.state.chats];
+    const index = this.getChatIndex(chat, this.state.chats);
+    console.log(index);
+    if (index !== -1) {
+      let chatChange = { ...chats[index] };
+      chatChange.showChat = true;
+      chats[index] = chatChange;
+      this.setState({ chats: chats, userTo: chat.userTo });
+    } else {
+      this.setState({
+        chats: this.state.chats.concat(chat),
+        userTo: chat.userTo,
+      });
+    }
   };
 
   render() {
@@ -99,8 +152,11 @@ class App extends Component {
         <div style={{ display: "flex" }}>
           <ConnectedUsers
             users={this.state.users}
+            userFrom={user}
             onUserPick={this.handleUserPick}
+            qwe={this.qwe}
           />
+          <button onClick={() => console.log(this.state.chats)}>Chats</button>
           <Chat
             socket={socket}
             loggedUser={user}
@@ -108,6 +164,13 @@ class App extends Component {
             showChat={this.state.showChat}
             onShowChat={this.handleShowChat}
             messages={this.state.messages}
+          />
+          <ChatList
+            chats={this.state.chats}
+            socket={socket}
+            onShowChat={this.handleShowChat}
+            messages={this.state.messages}
+            onCloseChat={this.handleCloseChat}
           />
           <Switch>
             <Route path="/login" component={Login} />

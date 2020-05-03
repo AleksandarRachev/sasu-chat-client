@@ -5,7 +5,13 @@ import send from "../../images/send.png";
 class Chat extends Component {
   state = {
     message: null,
+    chat:null
   };
+
+  componentDidMount() {
+    console.log(this.props.loggedUser)
+    this.setState({chat:{userFrom:this.props.loggedUser, userTo:this.props.userTo, showChat:true}})
+  }
 
   handleMessageChange = (message) => {
     this.setState({ message });
@@ -34,14 +40,16 @@ class Chat extends Component {
       onShowChat,
       messages,
       socket,
+      onCloseChat
     } = this.props;
 
     if (showChat) {
       return (
         <div className="chat">
+          {/* <button onClick={() => qwe(this.state.chat)}>Show</button> */}
           <div className="chat-info">
             <span>{userTo && userTo.username}</span>
-            <button onClick={onShowChat} type="button" className="close">
+            <button onClick={() => onCloseChat(this.state.chat)} type="button" className="close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
