@@ -95,12 +95,6 @@ class App extends Component {
   };
 
   handleCloseChat = (chat) => {
-    // console.log(
-    //   this.getChatIndex(
-    //     chat,
-    //     this.state.chats
-    //   )
-    // );
     let chats = [...this.state.chats];
     const index = this.getChatIndex(chat, this.state.chats);
     if (index !== -1) {
@@ -109,11 +103,6 @@ class App extends Component {
       chats[index] = chatChange;
       this.setState({ chats });
     }
-    // else {
-    //   this.setState({
-    //     chats: this.state.chats.concat({ chat }),
-    //   });
-    // }
   };
 
   getChatIndex(chat, chats) {
@@ -128,10 +117,9 @@ class App extends Component {
     return -1;
   }
 
-  qwe = (chat) => {
+  handleOpenChat = (chat) => {
     let chats = [...this.state.chats];
     const index = this.getChatIndex(chat, this.state.chats);
-    console.log(index);
     if (index !== -1) {
       let chatChange = { ...chats[index] };
       chatChange.showChat = true;
@@ -154,17 +142,17 @@ class App extends Component {
             users={this.state.users}
             userFrom={user}
             onUserPick={this.handleUserPick}
-            qwe={this.qwe}
+            onOpenChat={this.handleOpenChat}
           />
           <button onClick={() => console.log(this.state.chats)}>Chats</button>
-          <Chat
+          {/* <Chat
             socket={socket}
             loggedUser={user}
             userTo={this.state.userTo}
             showChat={this.state.showChat}
             onShowChat={this.handleShowChat}
             messages={this.state.messages}
-          />
+          /> */}
           <ChatList
             chats={this.state.chats}
             socket={socket}

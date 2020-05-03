@@ -5,12 +5,17 @@ import send from "../../images/send.png";
 class Chat extends Component {
   state = {
     message: null,
-    chat:null
+    chat: null,
   };
 
   componentDidMount() {
-    console.log(this.props.loggedUser)
-    this.setState({chat:{userFrom:this.props.loggedUser, userTo:this.props.userTo, showChat:true}})
+    this.setState({
+      chat: {
+        userFrom: this.props.loggedUser,
+        userTo: this.props.userTo,
+        showChat: true,
+      },
+    });
   }
 
   handleMessageChange = (message) => {
@@ -40,7 +45,7 @@ class Chat extends Component {
       onShowChat,
       messages,
       socket,
-      onCloseChat
+      onCloseChat,
     } = this.props;
 
     if (showChat) {
@@ -49,7 +54,11 @@ class Chat extends Component {
           {/* <button onClick={() => qwe(this.state.chat)}>Show</button> */}
           <div className="chat-info">
             <span>{userTo && userTo.username}</span>
-            <button onClick={() => onCloseChat(this.state.chat)} type="button" className="close">
+            <button
+              onClick={() => onCloseChat(this.state.chat)}
+              type="button"
+              className="close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -93,7 +102,12 @@ class Chat extends Component {
                 className="send-btn pr-0"
                 type="submit"
                 onClick={() =>
-                  this.handleMessageSend(socket, this.state.message, loggedUser, userTo)
+                  this.handleMessageSend(
+                    socket,
+                    this.state.message,
+                    loggedUser,
+                    userTo
+                  )
                 }
               >
                 <img width="30px" height="30px" src={send} />
