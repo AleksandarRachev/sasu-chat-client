@@ -3,16 +3,37 @@ import "./Chat.css";
 import send from "../../images/send.png";
 
 class Chat extends Component {
+  state = {
+    message: null,
+  };
+
+  handleMessageChange = (message) => {
+    this.setState({ message });
+  };
+
+  handleMessageSend = (socket, message, from, to) => {
+    if (message) {
+      socket.send(
+        JSON.stringify({
+          user: from,
+          chat: message,
+          type: "TEXT",
+          userTo: to,
+        })
+      );
+      this.setState({ message: null });
+      document.getElementById("message").value = "";
+    }
+  };
+
   render() {
     const {
       loggedUser,
       userTo,
       showChat,
       onShowChat,
-      message,
       messages,
-      onMessageChange,
-      onSend,
+      socket,
     } = this.props;
 
     if (showChat) {
@@ -52,16 +73,22 @@ class Chat extends Component {
                 })}
             </div>
             <form
-              style={{ display: "flex", width:"95%" }}
+              style={{ display: "flex", width: "95%" }}
               onSubmit={(e) => e.preventDefault()}
             >
               <input
                 id="message"
-                onChange={(e) => onMessageChange(e.target.value)}
-                class="form-control"
+                onChange={(e) => this.handleMessageChange(e.target.value)}
+                className="form-control"
               />
-              <button className="send-btn pr-0" type="submit" onClick={() => onSend(message)}>
-                <img width="30px" height="30px"  src={send}/>
+              <button
+                className="send-btn pr-0"
+                type="submit"
+                onClick={() =>
+                  this.handleMessageSend(socket, this.state.message, loggedUser, userTo)
+                }
+              >
+                <img width="30px" height="30px" src={send} />
               </button>
             </form>
           </React.Fragment>

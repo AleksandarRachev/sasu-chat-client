@@ -84,25 +84,6 @@ class App extends Component {
     );
   };
 
-  handleMessageChange = (message) => {
-    this.setState({ message });
-  };
-
-  handleMessageSend = (message) => {
-    if (message) {
-      socket.send(
-        JSON.stringify({
-          user: this.state.userFrom,
-          chat: this.state.message,
-          type: "TEXT",
-          userTo: this.state.userTo,
-        })
-      );
-      this.setState({ message: null });
-      document.getElementById("message").value = "";
-    }
-  };
-
   handleUserPick = (userTo) => {
     this.setState({ userTo: userTo, showChat: true, messages: [] });
   };
@@ -121,14 +102,12 @@ class App extends Component {
             onUserPick={this.handleUserPick}
           />
           <Chat
+            socket={socket}
             loggedUser={user}
             userTo={this.state.userTo}
             showChat={this.state.showChat}
             onShowChat={this.handleShowChat}
-            message={this.state.message}
             messages={this.state.messages}
-            onMessageChange={this.handleMessageChange}
-            onSend={this.handleMessageSend}
           />
           <Switch>
             <Route path="/login" component={Login} />
