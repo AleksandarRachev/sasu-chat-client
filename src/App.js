@@ -4,12 +4,11 @@ import NavBar from "./components/NavBar.js/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/User/Login";
 import ConnectedUsers from "./components/User/Connected/ConnectedUsers";
-import Chat from "./components/Chat/Chat";
 import ChatList from "./components/Chat/ChatList/ChatList";
 
 const AppConfig = {
   PROTOCOL: "ws:",
-  HOST: "//localhost",
+  HOST: "//192.168.0.106",
   PORT: ":9000",
 };
 
@@ -45,7 +44,6 @@ class App extends Component {
 
     socket.onmessage = (message) => {
       let data = JSON.parse(message.data);
-      console.log(data);
       switch (data.type) {
         case "USER_JOINED":
           this.setState({ users: data.users });
@@ -84,14 +82,6 @@ class App extends Component {
         type: "USER_LEFT",
       })
     );
-  };
-
-  handleUserPick = (userTo) => {
-    this.setState({ userTo: userTo });
-  };
-
-  handleShowChat = () => {
-    this.setState({ showChat: !this.state.showChat });
   };
 
   handleCloseChat = (chat) => {
@@ -141,22 +131,11 @@ class App extends Component {
           <ConnectedUsers
             users={this.state.users}
             userFrom={user}
-            onUserPick={this.handleUserPick}
             onOpenChat={this.handleOpenChat}
           />
-          <button onClick={() => console.log(this.state.chats)}>Chats</button>
-          {/* <Chat
-            socket={socket}
-            loggedUser={user}
-            userTo={this.state.userTo}
-            showChat={this.state.showChat}
-            onShowChat={this.handleShowChat}
-            messages={this.state.messages}
-          /> */}
           <ChatList
             chats={this.state.chats}
             socket={socket}
-            onShowChat={this.handleShowChat}
             messages={this.state.messages}
             onCloseChat={this.handleCloseChat}
           />

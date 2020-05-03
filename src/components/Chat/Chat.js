@@ -33,7 +33,7 @@ class Chat extends Component {
         })
       );
       this.setState({ message: null });
-      document.getElementById("message").value = "";
+      document.getElementById("message" + this.props.userTo.uid).value = "";
     }
   };
 
@@ -42,7 +42,6 @@ class Chat extends Component {
       loggedUser,
       userTo,
       showChat,
-      onShowChat,
       messages,
       socket,
       onCloseChat,
@@ -51,7 +50,6 @@ class Chat extends Component {
     if (showChat) {
       return (
         <div className="chat">
-          {/* <button onClick={() => qwe(this.state.chat)}>Show</button> */}
           <div className="chat-info">
             <span>{userTo && userTo.username}</span>
             <button
@@ -66,26 +64,41 @@ class Chat extends Component {
             <div className="chat-messages">
               {messages &&
                 messages.map((message, i) => {
-                  if (message.user.uid === loggedUser.uid) {
-                    return (
-                      <p
-                        style={{ marginLeft: "35%", borderRadius: "15px" }}
-                        className="text-break text-right badge-primary p-1 pr-3"
-                        key={i}
-                      >
-                        {message.chat}
-                      </p>
-                    );
-                  } else {
-                    return (
-                      <p
-                        style={{ marginRight: "35%", borderRadius: "15px" }}
-                        className="text-break text-left badge-light p-1 pl-3"
-                        key={i}
-                      >
-                        {message.user.username + ": " + message.chat}
-                      </p>
-                    );
+                  if (
+                    message.user.uid === userTo.uid ||
+                    message.user.uid === loggedUser.uid
+                  ) {
+                    if (
+                      message.user.uid === loggedUser.uid &&
+                      message.userTo.uid === userTo.uid
+                    ) {
+                      return (
+                        <p
+                          className="chat-message-wrapper text-break text-right"
+                          key={i}
+                        >
+                          <span className="chat-message d-inline-block badge-primary p-1 pr-2 pl-2">
+                            {message.chat}
+                          </span>
+                        </p>
+                      );
+                    } else {
+                      if (
+                        message.userTo.uid === loggedUser.uid &&
+                        message.user.uid !== loggedUser.uid
+                      ) {
+                        return (
+                          <p
+                            className="chat-message-wrapper text-break text-left"
+                            key={i}
+                          >
+                            <span className="chat-message d-inline-block badge-light p-1 pr-2 pl-2">
+                              {message.user.username + ": " + message.chat}
+                            </span>
+                          </p>
+                        );
+                      }
+                    }
                   }
                 })}
             </div>
@@ -94,7 +107,7 @@ class Chat extends Component {
               onSubmit={(e) => e.preventDefault()}
             >
               <input
-                id="message"
+                id={"message" + userTo.uid}
                 onChange={(e) => this.handleMessageChange(e.target.value)}
                 className="form-control"
               />

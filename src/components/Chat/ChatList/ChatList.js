@@ -7,8 +7,6 @@ class ChatList extends Component {
     const {
       chats,
       socket,
-      showChat,
-      onShowChat,
       messages,
       onCloseChat,
     } = this.props;
@@ -23,7 +21,6 @@ class ChatList extends Component {
               loggedUser={chat.userFrom}
               userTo={chat.userTo}
               showChat={chat.showChat}
-              onShowChat={onShowChat}
               messages={messages}
               onCloseChat={onCloseChat}
             />
