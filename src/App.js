@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./components/User/Login";
+import Login from "./components/User/Login/Login";
 import ConnectedUsers from "./components/User/Connected/ConnectedUsers";
 import ChatList from "./components/Chat/ChatList/ChatList";
+import Register from "./components/User/Register/Register";
 
 const AppConfig = {
   PROTOCOL: "ws:",
-  HOST: "//192.168.0.106",
+  HOST: "//localhost",
   PORT: ":9000",
 };
 
@@ -124,7 +125,7 @@ class App extends Component {
       this.setState({ chats: chats, userTo: chat.userTo });
     } else {
       this.setState({
-        chats: this.state.chats.concat(chat),
+        chats: [chat].concat(this.state.chats),
         userTo: chat.userTo,
       });
     }
@@ -140,7 +141,6 @@ class App extends Component {
             userFrom={user}
             onOpenChat={this.handleOpenChat}
           />
-          <button onClick={() => console.log(this.state.chats)}>Chats</button>
           <ChatList
             chats={this.state.chats}
             socket={socket}
@@ -149,6 +149,7 @@ class App extends Component {
           />
           <Switch>
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
           </Switch>
         </div>
       </Router>

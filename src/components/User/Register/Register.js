@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import "./Login.css";
 import axios from "axios";
-import global from "../../global";
-import Error from "../Messages/Error.js";
+import global from "../../../global";
+import Error from "../../Messages/Error";
 
-class Login extends Component {
+class Register extends Component {
   state = {
     username: null,
     password: null,
+    repeatPassword: null,
     error: null,
   };
 
@@ -19,20 +19,26 @@ class Login extends Component {
     this.setState({ password });
   };
 
-  handeLogin = () => {
-    this.setState({ error: null });
+  handleRepeatPasswordChange = (repeatPassword) => {
+    this.setState({ repeatPassword });
+  };
+
+  handleRegister = () => {
     axios
-      .post(global.backendUrl + "/users/login", {
+      .post(global.backendUrl + "/users", {
         username: this.state.username,
         password: this.state.password,
+        repeatPassword: this.state.repeatPassword,
       })
       .then(
         (response) => {
           localStorage.setItem("user", JSON.stringify(response.data));
-          window.location.href="/"
+          window.location.href = "/";
         },
         (error) => {
-          this.setState({ error: <Error message={"Wrong credentials"} /> });
+          this.setState({
+            error: <Error message={error.response.data.message} />,
+          });
         }
       );
   };
@@ -56,12 +62,20 @@ class Login extends Component {
             className="form-control"
           />
         </div>
-        <button onClick={this.handeLogin} className="btn btn-primary">
-          Submit
+        <div className="form-group">
+          <label>Repeat password</label>
+          <input
+            onChange={(e) => this.handleRepeatPasswordChange(e.target.value)}
+            type="password"
+            className="form-control"
+          />
+        </div>
+        <button onClick={this.handleRegister} className="btn btn-primary m-2">
+          Register
         </button>
       </form>
     );
   }
 }
 
-export default Login;
+export default Register;

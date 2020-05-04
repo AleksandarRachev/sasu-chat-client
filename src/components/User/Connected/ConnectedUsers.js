@@ -14,7 +14,7 @@ class ConnectedUsers extends Component {
               onClick={() =>
                 onOpenChat({ userFrom: userFrom, userTo: user, showChat: true })
               }
-              className="list-group-item list-group-item-action"
+              className="list-group-item list-group-item-action connected-user"
             >
               <span className="badge badge-success p-1 mr-2"> </span>
               {user.username}

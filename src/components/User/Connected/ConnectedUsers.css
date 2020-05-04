@@ -1,4 +1,12 @@
 .connected {
   width: calc(5vmin + 5rem);
   font-size: calc(1vmin + 10px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-top: 3rem;
+}
+
+.connected-user:hover {
+  cursor: pointer;
 }

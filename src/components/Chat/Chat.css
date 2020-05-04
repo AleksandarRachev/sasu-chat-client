@@ -1,17 +1,14 @@
 .chat-messages {
-  overflow: auto;
-  width: 20rem;
+  overflow-y: auto;
+  width: 18rem;
   display: flex;
   flex-direction: column-reverse;
   flex: 1 1;
   padding: 0 0.5rem;
-  margin: 0 0.5rem 1rem 0.5rem;
-  background-color: white;
   border-radius: 5px;
 }
 
 .chat {
-  background-color: #cdd1d1;
   border-radius: 5px;
   box-shadow: 1px 1px 15px black;
   z-index: 900;
@@ -19,7 +16,11 @@
   flex-direction: column;
   align-items: center;
   margin: 1rem;
-  padding: 0 0 1rem 0;
+}
+
+.chat-form {
+  display: flex;
+  width: 100%;
 }
 
 .chat-message-wrapper {
@@ -34,8 +35,9 @@
 .chat-info {
   display: flex;
   justify-content: space-between;
-  width: 90%;
-  padding: 0.3rem;
+  width: 100%;
+  padding: 0.3rem 1rem;
+  border-bottom: 1px solid;
 }
 
 .send-btn {

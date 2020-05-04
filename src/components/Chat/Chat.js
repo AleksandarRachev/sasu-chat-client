@@ -103,7 +103,7 @@ class Chat extends Component {
                 })}
             </div>
             <form
-              style={{ display: "flex", width: "95%" }}
+              className="chat-form"
               onSubmit={(e) => e.preventDefault()}
             >
               <input
@@ -123,7 +123,7 @@ class Chat extends Component {
                   )
                 }
               >
-                <img width="30px" height="30px" src={send} />
+                <img width="25px" height="25px" src={send} />
               </button>
             </form>
           </React.Fragment>

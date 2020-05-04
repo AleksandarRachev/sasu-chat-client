@@ -1,12 +1,10 @@
 .login-form {
-  width: 20rem;
+  width: 25rem;
   position: fixed;
-  left: 35%;
-  right: 35%;
+  left: 33%;
   top: 12rem;
-  padding: 2rem;
+  padding: 2rem 5rem;
   border-radius: 15px;
-  background-color: #bebebec2;    
   box-shadow: 1px 1px 9px #8080808c;
 }
 
@@ -16,5 +14,6 @@
     position: fixed;
     left: 20%;
     top: 8rem;
+    padding: 2rem 1rem;
   }
 }
