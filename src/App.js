@@ -52,6 +52,13 @@ class App extends Component {
           this.setState({ users: data.users });
           break;
         case "TEXT":
+          if (data.userTo.uid === user.uid) {
+            this.handleOpenChat({
+              userFrom: data.userTo,
+              userTo: data.user,
+              showChat: true,
+            });
+          }
           this.setState({
             messages: [data].concat(this.state.messages),
             showChat: true,
@@ -98,8 +105,8 @@ class App extends Component {
   getChatIndex(chat, chats) {
     for (var i = 0; i < chats.length; i++) {
       if (
-        chats[i].userFrom === chat.userFrom &&
-        chats[i].userTo === chat.userTo
+        chats[i].userFrom.uid === chat.userFrom.uid &&
+        chats[i].userTo.uid === chat.userTo.uid
       ) {
         return i;
       }
@@ -133,6 +140,7 @@ class App extends Component {
             userFrom={user}
             onOpenChat={this.handleOpenChat}
           />
+          <button onClick={() => console.log(this.state.chats)}>Chats</button>
           <ChatList
             chats={this.state.chats}
             socket={socket}
