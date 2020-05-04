@@ -95,6 +95,7 @@ class App extends Component {
   handleCloseChat = (chat) => {
     let chats = [...this.state.chats];
     const index = this.getChatIndex(chat, this.state.chats);
+    console.log(index)
     if (index !== -1) {
       let chatChange = { ...chats[index] };
       chatChange.showChat = false;
@@ -125,7 +126,7 @@ class App extends Component {
       this.setState({ chats: chats, userTo: chat.userTo });
     } else {
       this.setState({
-        chats: [chat].concat(this.state.chats),
+        chats: this.state.chats.concat(chat),
         userTo: chat.userTo,
       });
     }
